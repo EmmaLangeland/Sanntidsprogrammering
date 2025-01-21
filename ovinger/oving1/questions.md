@@ -10,6 +10,7 @@ What is the difference between a *race condition* and a *data race*?
 > A race condition or race hazard is the condition of systems where the system's substantive behavior is dependent on the sequence or timing of other uncontrollable events, leading to unexpected or inconsistent results. A data race occurs when 2 instructions from different threads access the same memory location, at least one of these accesses is a write and there is no synchronization that is mandating any particular order among these accesses.
 A data race occurs when 2 instructions from different threads access the same memory location, at least one of these accesses is a write and there is no synchronization that is mandating any particular order among these accesses.
 They are not a subset of one another, but are not the same. 
+Using mutex will help with race conditions
  
 *Very* roughly - what does a *scheduler* do, and how does it do it?
 > The scheduler ensures the execution of jobs at specific times or in response to specific triggering events.

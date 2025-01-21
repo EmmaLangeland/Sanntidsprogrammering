@@ -8,18 +8,18 @@ import (
 	"time"
 )
 
-var i = 0
+var i = 1
 
 func incrementing() {
 	//TODO: increment i 1000000 times
-	for i := 0; i < 1000000; i++ {
+	for j := 0; j < 1000000; j++ {
 		i++
 	}
 }
 
 func decrementing() {
 	//TODO: decrement i 1000000 times
-	for i := 0; i < 1000000; i++ {
+	for j := 0; j < 1000001; j++ {
 		i--
 	}
 }
@@ -37,5 +37,5 @@ func main() {
 	// We have no direct way to wait for the completion of a goroutine (without additional synchronization of some sort)
 	// We will do it properly with channels soon. For now: Sleep.
 	time.Sleep(500 * time.Millisecond)
-	Println("The magic number is:", i)
+	Println("GO The magic number is:", i)
 }
