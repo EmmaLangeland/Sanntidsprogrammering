@@ -9,11 +9,17 @@ int i = 0;
 // Note the return type: void*
 void* incrementingThreadFunction(){
     // TODO: increment i 1_000_000 times
+    for (int j= 0; j < 1000000; j++){
+        i++;
+    }
     return NULL;
 }
 
 void* decrementingThreadFunction(){
     // TODO: decrement i 1_000_000 times
+    for (int j = 0; j <1000000; j++){
+        i--;
+    }
     return NULL;
 }
 
@@ -22,7 +28,7 @@ int main(){
     // TODO: 
     // start the two functions as their own threads using `pthread_create`
     // Hint: search the web! Maybe try "pthread_create example"?
-    
+    pthread_t thread1, thread2;
     // TODO:
     // wait for the two threads to be done before printing the final result
     // Hint: Use `pthread_join`    
