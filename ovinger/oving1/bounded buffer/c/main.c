@@ -13,7 +13,7 @@ struct BoundedBuffer {
     pthread_mutex_t     mtx;
     sem_t               numElements;
     sem_t               capacity;
-    
+     
     
 };
 

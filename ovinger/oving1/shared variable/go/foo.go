@@ -10,6 +10,7 @@ import (
 
 var i = 1
 
+// A select blocks until one of its cases can run, then it executes that case. It chooses one at random if multiple are ready.
 func incrementing() {
 	//TODO: increment i 1000000 times
 	for j := 0; j < 1000000; j++ {
