@@ -7,7 +7,7 @@
 #include "elevator_io_device.h"
 #include "fsm.h"
 #include "timer.h"
-
+#include "elevator_hardware.h" /* lagt til av meg */
 
 int main(void){
     printf("Started!\n");
