@@ -5,35 +5,62 @@ package main
 import (
 	. "fmt"
 	"runtime"
-	"time"
 )
 
 var i = 0
 
-func incrementing() {
+func incrementing(incrementCh, doneCh chan struct{}) {
 	//TODO: increment i 1000000 times
-	for j := 0; j < 1000000; j++ {
-		i++
+	for j := 0; j < 1000001; j++ {
+		incrementCh <- struct{}{}
 	}
+	doneCh <- struct{}{}
 }
 
-func decrementing() {
+func decrementing(decrementCh, doneCh chan struct{}) {
 	//TODO: decrement i 1000000 times
 	for j := 0; j < 1000000; j++ {
-		i--
+		decrementCh <- struct{}{}
+	}
+	doneCh <- struct{}{}
+}
+
+func counter(incrementCh, decrementCh, doneCh chan struct{}, stopCh chan int) {
+	count := 0
+	for {
+		select {
+		case <-incrementCh:
+			i++
+		case <-decrementCh:
+			i--
+		case <-doneCh:
+			count++
+			if count >= 2 {
+				stopCh <- i
+				return
+			}
+		}
 	}
 }
 
 func main() {
 	// What does GOMAXPROCS do? What happens if you set it to 1?
-	runtime.GOMAXPROCS(1)
+	runtime.GOMAXPROCS(2)
+
+	incrementCh := make(chan struct{})
+	decrementCh := make(chan struct{})
+	doneCh := make(chan struct{})
+	stopCh := make(chan int)
 
 	// TODO: Spawn both functions as goroutines
-	go incrementing()
-	go decrementing()
+	go incrementing(incrementCh, doneCh)
+	go decrementing(decrementCh, doneCh)
+	go counter(incrementCh, decrementCh, doneCh, stopCh)
 
 	// We have no direct way to wait for the completion of a goroutine (without additional synchronization of some sort)
 	// We will do it properly with channels soon. For now: Sleep.
-	time.Sleep(500 * time.Millisecond)
+	//time.Sleep(500 * time.Millisecond)
+
+	i := <-stopCh
 	Println("The magic number is:", i)
 }
