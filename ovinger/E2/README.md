@@ -45,6 +45,8 @@ We have set up a server on the real time lab that you're going to communicate wi
 ### Receiving UDP packets, and finding the server IP:
 The server broadcasts its own IP address on port `30000`. Listen for messages on this port to find it. You should write down the IP address, as you will need it for again later in the exercise.
 
+Emma: Local IP: 10.24.35.209
+
 ### Sending UDP packets:
 The server will respond to any message you send to it. Try sending a message to the server IP on port `20000 + n` where `n` is the number of the workspace you're sitting at. Listen to messages from the server and print them to a terminal to confirm that the messages are in fact being responded to.
 
@@ -71,7 +73,7 @@ The server will read until it encounters the first `\0`, regardless. Strings in 
 TCP guarantees that packets arrive in the order they are sent. But this does not mean that it guarantees that these packets are delivered individually (or that they are delivered at all, since you could always apply scissors to the network cable...). If you send several packets with no delay between them, they may be coalesced into a larger packet. The networking server is too simple to handle this (and fixing it is a very low priority), but you can disable the coalescing behavior on the sender-side by setting the socket option `TCP_NODELAY`.
 
 ### Connecting:
-The IP address of the TCP server will be the same as the address the UDP server as spammed out on port 30000. Connect to the TCP server, using port `34933` for fixed-size messages, or port `33546` for 0-terminated messages. 
+The IP address of the TCP server will be the same as the address the UDP server as spammed out on port `30000`. Connect to the TCP server, using port `34933` for fixed-size messages, or port `33546` for 0-terminated messages. 
 
 The server will send you a welcome-message when you connect, and after that it will echo anything you say back to you (as long as your message ends with `'\0'`). Try sending and receiving a few messages.
 

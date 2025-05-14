@@ -18,3 +18,4 @@ func LocalIP() (string, error) {
 	}
 	return localIP, nil
 }
+
