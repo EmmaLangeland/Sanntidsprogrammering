@@ -12,7 +12,7 @@ func UDP_Receiver() {
 
 	addr := net.UDPAddr{
 		Port: 20003,
-		IP: net.IPv4zero //net.IPv4(10, 24, 35, 209), // IP: net.IPv4(10, 24, 35, 209), addr: 10.24.35.209:20004
+		IP:   net.IPv4zero, //net.IPv4(10, 24, 35, 209), // IP: net.IPv4(10, 24, 35, 209), addr: 10.24.35.209:20004
 	}
 	conn, err := net.ListenUDP("udp", &addr)
 	if err != nil {
@@ -21,7 +21,7 @@ func UDP_Receiver() {
 	}
 	defer conn.Close()
 
-	buf:= make([]byte, 1024)
+	buf := make([]byte, 1024)
 	for {
 		n, fromWhoAddr, err := conn.ReadFromUDP(buf)
 		if err != nil {
@@ -29,20 +29,39 @@ func UDP_Receiver() {
 			continue
 		}
 		localIP, err := localip.LocalIP()
-		if (fromWhoAddr.IP != localIP){
+		if fromWhoAddr.IP.String() != localIP {
 			fmt.Printf("[UDP RECEIVER] From %s: %s\n", fromWhoAddr.String(), string(buf[:n]))
 		}
 	}
-	
 }
 
 func UDP_Sender() {
-	net.DialUDP("udp", ":20003")
+	serverIP := net.IPv4(10, 24, 35, 209)
+	serverPort := 20004
+
+	conn, err := net.DialUDP("udp", nil, &net.UDPAddr{
+		IP:   serverIP,
+		Port: serverPort,
+	})
+	defer conn.Close()
+
+	message := "DU STÅR EKSAMEN \x00"
+	_, err = conn.Write([]byte(message))
+	if err != nil {
+		fmt.Println("Error sending:", err)
+		return
+	} else {
+		fmt.Printf("[UDP SENDER] Sent to %s:%d: %s\n", serverIP.String(), serverPort, message)
+	}
 
 }
 
 func main() {
-	go 
+	go UDP_Receiver()
 
-	select{}
+	time.Sleep(1 * time.Second)
+
+	UDP_Sender()
+
+	select {}
 }
