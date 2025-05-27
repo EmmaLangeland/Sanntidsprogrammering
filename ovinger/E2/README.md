@@ -45,7 +45,7 @@ We have set up a server on the real time lab that you're going to communicate wi
 ### Receiving UDP packets, and finding the server IP:
 The server broadcasts its own IP address on port `30000`. Listen for messages on this port to find it. You should write down the IP address, as you will need it for again later in the exercise.
 
-Emma: Local IP: 10.24.35.209
+Emma: Local IP: 10.24.35.209   or     10.24.32.55
 
 ### Sending UDP packets:
 The server will respond to any message you send to it. Try sending a message to the server IP on port `20000 + n` where `n` is the number of the workspace you're sitting at. Listen to messages from the server and print them to a terminal to confirm that the messages are in fact being responded to.
